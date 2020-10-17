@@ -34,8 +34,8 @@ struct {\
         __tmp__ = (head)->lfh_first;\
         if (!__tmp__->field.lfe_next) {\
             (head)->lfh_first = NULL;\
-            typeof((head)->lfh_last) __tmp2__ = &__tmp__->field.lfe_next;\
-            if (!__sync_bool_compare_and_swap(&((head)->lfh_last), __tmp2__, &((head)->lfh_first))) {\
+            __sync_synchronize();\
+            if (!__sync_bool_compare_and_swap(&((head)->lfh_last), &__tmp__->field.lfe_next, &((head)->lfh_first))) {\
                 while (!*(void*volatile*)&__tmp__->field.lfe_next) {\
                      /* sched_yield(); */\
                 }\
